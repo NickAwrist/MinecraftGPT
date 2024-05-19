@@ -1,33 +1,23 @@
 package nicholas.minecraftgpt;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class Messenger {
 
-    public static void sendError(CommandSender sender, String message){
-        sender.sendMessage(ChatColor.RED + message);
-    }
+    private static final Component prefix = Component.text("MinecraftGPT", NamedTextColor.GOLD).append(Component.text(" | ", NamedTextColor.GRAY));
 
-    public static void sendInfo(CommandSender sender, String message){
-        sender.sendMessage(ChatColor.GRAY + message);
+    public static void sendError(CommandSender sender, String message){
+        sender.sendMessage(prefix.append(Component.text(message, NamedTextColor.RED)));
     }
 
     public static void sendSuccess(CommandSender sender, String message){
-        sender.sendMessage(ChatColor.GREEN + message);
+        sender.sendMessage(prefix.append(Component.text(message, NamedTextColor.GREEN)));
     }
 
-    public static void sendPlayerError(Player player, String message){
-        player.sendMessage(ChatColor.RED + message);
-    }
-
-    public static void sendPlayerInfo(Player player, String message){
-        player.sendMessage(ChatColor.GRAY + message);
-    }
-
-    public static void sendPlayerSuccess(Player player, String message){
-        player.sendMessage(ChatColor.GREEN + message);
+    public static void sendInfo(CommandSender sender, String message){
+        sender.sendMessage(prefix.append(Component.text(message, NamedTextColor.GRAY)));
     }
 
 }

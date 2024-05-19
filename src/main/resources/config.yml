@@ -1,0 +1,30 @@
+
+# Input your OpenAI API key here. To get an API key, go visit https://platform.openai.com/api-keys
+OPENAI_API_KEY: "YOUR API KEY"
+
+# The model configuration. You can change the model name, temperature, max_tokens, top_p, frequency_penalty, and presence_penalty.
+
+# List of models
+# gpt-3.5-turbo  : Training data is up to September 2021  : Input = $0.0005 / 1K tokens  Output = $0.0015 / 1K tokens
+# gpt-4-turbo    : Training data is up to December 2023   : Input = $0.01 / 1K tokens    Output = $0.03 / 1K tokens
+# gpt-4o         : Training data is up to October 2023    : Input = $0.005 / 1K tokens    Output = $0.015 / 1K tokens    (recommended)
+
+model:
+  name: "gpt-3.5-turbo"
+  temperature: 0.5
+  max_tokens: 100
+  top_p: 1.0
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+
+# The prompt configuration. This is used to be more specific with the prompt to fit your needs. Users will input the prompt, {PROMPT} and the input will be formatted with the prompt_enhancement.
+prompt_enhancement: "You are a Minecraft teacher and your answers should be Minecraft related. In short paragraph/sentence form, answer this prompt: {PROMPT} in Minecraft version 1.20.4"
+
+# Number of tokens a user inputs per hour (not including prompt enhancement input from above). Restarting the server will reset this count.
+rate_limit_enabled: true
+rate_limit: 100
+
+# The maximum number of tokens a player can input per request.
+max_tokens_per_request: 50
+
+
