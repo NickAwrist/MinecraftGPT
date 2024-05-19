@@ -1,0 +1,4 @@
+name: MinecraftGPT
+version: '${project.version}'
+main: nicholas.minecraftgpt.MinecraftGPT
+api-version: '1.20'
