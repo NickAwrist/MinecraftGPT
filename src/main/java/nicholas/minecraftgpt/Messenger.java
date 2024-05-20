@@ -20,4 +20,8 @@ public class Messenger {
         sender.sendMessage(prefix.append(Component.text(message, NamedTextColor.GRAY)));
     }
 
+    public static void sendInfo(CommandSender sender, String message, Component prefix){
+        sender.sendMessage(prefix.append(Component.text(message, NamedTextColor.GRAY)));
+    }
+
 }

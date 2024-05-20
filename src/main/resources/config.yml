@@ -18,7 +18,8 @@ model:
   presence_penalty: 0.0
 
 # The prompt configuration. This is used to be more specific with the prompt to fit your needs. Users will input the prompt, {PROMPT} and the input will be formatted with the prompt_enhancement.
-prompt_enhancement: "You are a Minecraft teacher and your answers should be Minecraft related. In short paragraph/sentence form, answer this prompt: {PROMPT} in Minecraft version 1.20.4"
+prompt_enhancement_enabled: true
+prompt_enhancement: "You are a Minecraft professional. In short paragraph/sentence form, answer this prompt: {PROMPT}."
 
 # Number of tokens a user inputs per hour (not including prompt enhancement input from above). Restarting the server will reset this count.
 rate_limit_enabled: true

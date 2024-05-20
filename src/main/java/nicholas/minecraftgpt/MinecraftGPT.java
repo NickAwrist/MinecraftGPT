@@ -1,6 +1,7 @@
 package nicholas.minecraftgpt;
 
 import nicholas.minecraftgpt.commands.gpt;
+import nicholas.minecraftgpt.events.ChatListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,21 +17,23 @@ public final class MinecraftGPT extends JavaPlugin {
         plugin = this;
 
         saveDefaultConfig();
-
-        // Create a new instance of the OpenAI class
-
-        Bukkit.getConsoleSender().sendMessage("------ Enabling MinecraftGPT ------");
         openAI = new OpenAI(this);
 
         // Register the command
-        this.getCommand("gpt").setExecutor(new gpt());
+        gpt gptCommand = new gpt(openAI);
+        getCommand("gpt").setExecutor(gptCommand);
+
+        // Register the event listener
+        Bukkit.getPluginManager().registerEvents(new ChatListener(gptCommand), this);
+
+        Bukkit.getConsoleSender().sendMessage("------ MinecraftGPT Enabled ------");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
 
-        Bukkit.getConsoleSender().sendMessage("------ Disabling MinecraftGPT ------");
+        Bukkit.getConsoleSender().sendMessage("------ MinecraftGPT Disabled ------");
     }
 
     public static MinecraftGPT getPlugin(){

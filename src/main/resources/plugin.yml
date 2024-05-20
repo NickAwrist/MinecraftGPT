@@ -4,5 +4,5 @@ main: nicholas.minecraftgpt.MinecraftGPT
 api-version: '1.20'
 commands:
   gpt:
-    description: Ask MinecraftGPT a question
-    usage: /gpt <question>
+    description: Toggle conversation mode with MinecraftGPT
+    usage: /gpt
