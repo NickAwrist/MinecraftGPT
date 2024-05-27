@@ -21,7 +21,6 @@ public class gpt implements CommandExecutor {
     private final HashSet<Player> queryingPlayers = new HashSet<>();
 
     public gpt(OpenAI openAI){
-        Bukkit.getLogger().warning("GPT Command Initialized");
         this.openAI = openAI;
     }
 
@@ -48,10 +47,23 @@ public class gpt implements CommandExecutor {
     public void handleChatMessage(Player player, Component message){
 
         if(queryingPlayers.contains(player)){
+
+            // Check if the player is rate limited
+            if(openAI.isRateLimited(player.getUniqueId())){
+
+                int playerCooldown = openAI.getPlayerCooldown(player.getUniqueId());
+
+                Messenger.sendError(player, "You are rate limited. Please wait before making another request. Number of requests reset in "+playerCooldown+" minutes.");
+                return;
+            }else{
+                openAI.incrementRequests(player.getUniqueId());
+            }
+
+
+            // Check if the number of tokens in the message exceeds the maximum allowed
             int maxTokens = MinecraftGPT.getPlugin().getConfig().getInt("max_tokens_per_request");
 
             PlainTextComponentSerializer serializer = PlainTextComponentSerializer.plainText();
-
             String messageString = serializer.serialize(message);
             String[] tokens = messageString.split(" ");
 
@@ -60,8 +72,10 @@ public class gpt implements CommandExecutor {
                 return;
             }
 
-            // Call the OpenAI class to generate a response
+            Bukkit.getLogger().info("Conversation mode| "+player.getName()+": "+messageString);
 
+
+            // Call the OpenAI class to generate a response
             Messenger.sendInfo(player, "Generating response...");
 
             OpenAI openAI = MinecraftGPT.getOpenAI();
@@ -82,30 +96,7 @@ public class gpt implements CommandExecutor {
 
     private void sendResponse(Player player, String response){
 
-//        if(response.length() >= 240){
-//
-//            int numberOfMessages = (int) Math.ceil((double) response.length() / 240);
-//
-//            for(int i = 0; i < numberOfMessages; i++){
-//                int startIndex = i * 240;
-//                int endIndex = Math.min((i + 1) * 240, response.length());
-//                String message = response.substring(startIndex, endIndex);
-//
-//                if(i==0){
-//                    Messenger.sendInfo(player, message);
-//                }else{
-//                    Messenger.sendInfo(player, message, Component.text(""));
-//                }
-//            }
-//
-//            return;
-//        }else{
-//            Messenger.sendInfo(player, response);
-//        }
-
-
-        Bukkit.getLogger().info("Sending response to player: "+response);
-        Bukkit.getLogger().info("Response length: "+response.length());
+        Bukkit.getLogger().info("Conversation mode| Sending response to "+player.getName()+": "+response);
         Messenger.sendInfo(player, response);
 
     }
